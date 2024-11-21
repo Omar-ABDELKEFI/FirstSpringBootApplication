@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Students Management</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/students.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-5">List of Students</h1>
+		<div id="alertContainer"></div>
+
+        <form id="studentForm" action="/students" method="post" class="mb-4">
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" id="id" name="id" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre</label>
+                <select class="form-control" id="genre" name="genre" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Student</button>
+        </form>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Genre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody" th:if="${students.isEmpty()}">
+                <tr>
+                    <td colspan="4" class="text-center">No student found</td>
+                </tr>
+            </tbody>
+            <tbody id="studentTableBody" th:each="student : ${students}">
+                <tr>
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.genre}"></td>
+                    <td>
+						<button class="btn btn-warning btn-sm edit-btn" th:data-id="${student.id}" th:data-name="${student.name}" th:data-genre="${student.genre}">Edit</button>
+						<button class="btn btn-danger btn-sm delete-btn" th:data-id="${student.id}">Delete AJAX</button>
+						<form th:action="@{/students/delete/{id}(id=${student.id})}" method="post" style="display: inline;">
+							<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+						</form>
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Student Modal -->
+ <!-- Edit Student Modal -->
+<div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editStudentForm" action="/students/update" method="post">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div class="form-group">
+                        <label for="edit-name">Name</label>
+                        <input type="text" class="form-control" id="edit-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-genre">Genre</label>
+                        <select class="form-control" id="edit-genre" name="genre" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
