@@ -54,9 +54,9 @@
                     <td th:text="${student.genre}"></td>
                     <td>
 						<button class="btn btn-warning btn-sm edit-btn" th:data-id="${student.id}" th:data-name="${student.name}" th:data-genre="${student.genre}">Edit</button>
-						<button class="btn btn-danger btn-sm delete-btn" th:data-id="${student.id}">Delete AJAX</button>
+						<button class="btn btn-danger btn-sm delete-btn" th:data-id="${student.id}">Delete</button>
 						<form th:action="@{/students/delete/{id}(id=${student.id})}" method="post" style="display: inline;">
-							<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+							<button type="submit" class="btn btn-danger btn-sm">Delete Ajax</button>
 						</form>
 					</td>
                 </tr>

@@ -1,40 +1,29 @@
 package tn.iit.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import tn.iit.dto.StudentDto;
+import tn.iit.repository.StudentRepository;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
-	private List<StudentDto> students = new ArrayList<>();
+    private final StudentRepository studentRepository;
 
-	public StudentService() {
+    public void save(StudentDto studentDto) {
+        studentRepository.save(studentDto);
+    }
 
-	}
+    public List<StudentDto> findAll() {
+        return studentRepository.findAll();
+    }
 
-	public void save(StudentDto studentDto) {
-		students.add(studentDto);
-	}
+    public void deleteById(String id) {
+        studentRepository.deleteById(id);
+    }
 
-	public List<StudentDto> findAll() {
-		return students;
-	}
-
-	public void deleteById(String id) {
-
-		students.removeIf(student -> student.getId().equals(id));
-	}
-
-	public void update(StudentDto studentDto) {
-		for (StudentDto student : students) {
-			if (student.getId().equals(studentDto.getId())) {
-				student.setName(studentDto.getName());
-				student.setGenre(studentDto.getGenre());
-				break;
-			}
-		}
-	}
+    public void update(StudentDto studentDto) {
+        studentRepository.save(studentDto);
+    }
 }

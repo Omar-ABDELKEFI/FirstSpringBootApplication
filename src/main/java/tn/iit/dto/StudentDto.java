@@ -1,13 +1,17 @@
 package tn.iit.dto;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.EqualsAndHashCode.Include;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Entity
+@Table(name = "students")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,8 +19,9 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class StudentDto {
-	@Include // id est le seul champ à inclure dans equals et hashCode
-	private String id; // PK
-	private String name;
-	private String genre; // New field
+    @Id
+    @EqualsAndHashCode.Include
+    private String id;
+    private String name;
+    private String genre;
 }
