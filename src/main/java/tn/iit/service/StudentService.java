@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import tn.iit.dto.StudentDto;
 import tn.iit.repository.StudentRepository;
+import tn.iit.exception.CompteNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +26,11 @@ public class StudentService {
 
     public void update(StudentDto studentDto) {
         studentRepository.save(studentDto);
+    }
+
+    public StudentDto findById(String id) {
+        return studentRepository.findById(id)
+                .map(student -> new StudentDto(student.getId(), student.getName(), student.getGenre()))
+                .orElseThrow(() -> new CompteNotFoundException("Student with id " + id + " not found"));
     }
 }

@@ -39,6 +39,15 @@ public class StudentController {
 		boolean exists = studentService.findAll().stream().anyMatch(student -> student.getId().equals(id));
 		return ResponseEntity.ok(exists);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<StudentDto> findById(@PathVariable String id) {
+		StudentDto student = studentService.findById(id);
+		if (student == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(student);
+	}
 
 	@PostMapping("/delete/{id}")
 	public String removeStudent(@PathVariable String id) {
